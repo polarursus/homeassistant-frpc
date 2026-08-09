@@ -2,8 +2,12 @@
 
 ## Installing the add-on
 
-Open Settings, Add-ons, Add-on Store, then the three-dot menu in the top right
-and pick Repositories. Add:
+Open Settings, then **Apps**. Older releases call the same entry **Add-ons**;
+the 2026 versions renamed it, and dropped it from the Settings page on some
+installs - `http://homeassistant.local:8123/app` always gets you there.
+
+Open the store, then the three-dot menu in the top right, and pick
+Repositories. Add:
 
 ```
 https://github.com/polarursus/homeassistant-frpc
@@ -11,9 +15,6 @@ https://github.com/polarursus/homeassistant-frpc
 
 Refresh the page, and **FRP Client** appears under a section named after this
 repository. Install it, fill in the Configuration tab, start it.
-
-On Home Assistant OS versions from 2026 onward the menu is called **Apps**
-rather than Add-ons - same thing, renamed.
 
 ## Trusting the proxy
 

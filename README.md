@@ -34,8 +34,10 @@ that matter, and gets out of the way entirely when you hand it your own TOML.
 
 ## Install
 
-In Home Assistant open Settings, Add-ons, Add-on Store, then the three-dot menu
-in the top right and pick Repositories. Add:
+In Home Assistant open Settings, then **Apps** (called **Add-ons** before the
+2026 releases, and reachable at `/app` if it is missing from Settings). Open
+the store, then the three-dot menu in the top right, and pick Repositories.
+Add:
 
 ```
 https://github.com/polarursus/homeassistant-frpc
