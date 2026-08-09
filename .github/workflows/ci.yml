@@ -1,0 +1,76 @@
+---
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  shell:
+    name: Shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax check
+        run: |
+          bash -n server/install-frps.sh
+          bash -n frpc/run.sh
+      - name: ShellCheck
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq shellcheck
+          shellcheck server/install-frps.sh
+          shellcheck --shell=bash --exclude=SC1008,SC2148 frpc/run.sh
+
+  yaml:
+    name: YAML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse every YAML file
+        run: |
+          python3 - <<'PY'
+          import pathlib
+          import sys
+
+          import yaml
+
+          failed = False
+          for path in sorted(pathlib.Path('.').rglob('*.y*ml')):
+              try:
+                  yaml.safe_load(path.read_text())
+              except yaml.YAMLError as err:
+                  print(f"{path}: {err}")
+                  failed = True
+          sys.exit(1 if failed else 0)
+          PY
+
+  addon:
+    name: Add-on metadata
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Options and schema agree
+        run: |
+          python3 - <<'PY'
+          import sys
+
+          import yaml
+
+          config = yaml.safe_load(open('frpc/config.yaml'))
+          options = set(config['options'])
+          schema = set(config['schema'])
+
+          if options != schema:
+              print(f"only in options: {sorted(options - schema)}")
+              print(f"only in schema:  {sorted(schema - options)}")
+              sys.exit(1)
+
+          translations = yaml.safe_load(open('frpc/translations/en.yaml'))
+          missing = options - set(translations['configuration'])
+          if missing:
+              print(f"missing translations: {sorted(missing)}")
+              sys.exit(1)
+          PY

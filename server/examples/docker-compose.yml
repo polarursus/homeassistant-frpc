@@ -1,0 +1,29 @@
+# frps behind Caddy, which handles the certificates.
+#
+# frps keeps its vhost port on 8080 and never touches 80/443; Caddy owns those
+# and forwards by hostname. Nothing but Caddy needs to be reachable over HTTPS.
+#
+# Put frps.toml and Caddyfile next to this file, then: docker compose up -d
+
+services:
+  frps:
+    image: snowdreamtech/frps:0.70.1
+    container_name: frps
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./frps.toml:/etc/frp/frps.toml:ro
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

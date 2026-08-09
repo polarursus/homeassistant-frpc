@@ -1,0 +1,52 @@
+---
+name: "FRP Client"
+description: "Expose Home Assistant through a remote frps server - works behind CGNAT, with TCP, KCP, QUIC or WebSocket transports"
+version: "1.1.0"
+slug: "frpc"
+url: "https://github.com/polarursus/homeassistant-frpc"
+init: false
+startup: application
+boot: "auto"
+host_network: true
+arch:
+  - amd64
+  - aarch64
+  - armv7
+  - armhf
+map:
+  - share:rw
+  - addon_config:rw
+options:
+  configMode: "options"
+  configFile: "/share/frpc.toml"
+  serverAddr: ""
+  serverPort: 7000
+  authToken: ""
+  protocol: "tcp"
+  tls: true
+  proxyName: "homeassistant"
+  proxyType: "http"
+  customDomain: ""
+  remotePort: 8123
+  localIP: "127.0.0.1"
+  localPort: 8123
+  useEncryption: true
+  useCompression: true
+  logLevel: "info"
+schema:
+  configMode: "list(options|file)"
+  configFile: str
+  serverAddr: str?
+  serverPort: port
+  authToken: password?
+  protocol: "list(tcp|kcp|quic|websocket|wss)"
+  tls: bool
+  proxyName: str
+  proxyType: "list(http|https|tcp)"
+  customDomain: str?
+  remotePort: port
+  localIP: str
+  localPort: port
+  useEncryption: bool
+  useCompression: bool
+  logLevel: "list(trace|debug|info|warn|error)"

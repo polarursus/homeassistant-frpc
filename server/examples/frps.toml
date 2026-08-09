@@ -1,0 +1,41 @@
+# Minimal frps configuration, TCP only.
+# Written for frp 0.52 and newer, which uses TOML instead of the old INI files.
+
+bindAddr = "0.0.0.0"
+bindPort = 7000
+
+# Uncomment to also accept UDP transports. Useful when TCP to this port is
+# blocked or throttled, and the usual answer for flaky mobile uplinks.
+# kcpBindPort = 7000
+# quicBindPort = 7001
+
+auth.method = "token"
+auth.token = "replace-me-with-a-long-random-string"
+
+# Reject clients that do not wrap their control connection in TLS.
+transport.tls.force = true
+
+# Route several tunnels over one port by hostname. Set these to 8080/8443 and
+# put Caddy or nginx in front if you want automatic HTTPS certificates.
+vhostHTTPPort = 80
+# vhostHTTPSPort = 443
+
+# Wildcard host, so clients can claim <name>.frp.example.com by setting
+# subdomain instead of customDomains.
+# subDomainHost = "frp.example.com"
+
+# Clients asking for a plain TCP remotePort only get one from this range.
+allowPorts = [{ start = 8000, end = 9000 }]
+
+# Bind tunnelled ports to loopback only, for when a reverse proxy sits in front.
+# proxyBindAddr = "127.0.0.1"
+
+# The dashboard has no rate limiting - keep it on loopback and reach it over
+# an SSH tunnel: ssh -L 7500:127.0.0.1:7500 you@server
+# webServer.addr = "127.0.0.1"
+# webServer.port = 7500
+# webServer.user = "admin"
+# webServer.password = "replace-me"
+
+log.to = "console"
+log.level = "info"

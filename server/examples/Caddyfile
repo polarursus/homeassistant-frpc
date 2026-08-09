@@ -1,0 +1,21 @@
+# Caddy terminates TLS and hands the request to the frps vhost port.
+# Certificates are issued and renewed automatically, so frps never sees a key.
+#
+# Requires frps to have:  vhostHTTPPort = 8080
+
+ha.example.com {
+	reverse_proxy 127.0.0.1:8080 {
+		header_up Host {host}
+	}
+}
+
+# One line per extra tunnel. Each name must match the client's customDomains.
+# esphome.example.com {
+# 	reverse_proxy 127.0.0.1:8080 {
+# 		header_up Host {host}
+# 	}
+# }
+
+# For a wildcard host (subDomainHost on the server) use a DNS challenge - the
+# HTTP challenge cannot prove ownership of *.frp.example.com. That needs a
+# Caddy build with your DNS provider's module.

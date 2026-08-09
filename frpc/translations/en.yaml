@@ -1,0 +1,74 @@
+---
+configuration:
+  configMode:
+    name: Configuration mode
+    description: >-
+      "options" builds the frpc config from the fields below. "file" ignores
+      them and uses your own TOML file instead.
+  configFile:
+    name: Custom config file
+    description: >-
+      Path to your own frpc TOML file, used only when configuration mode is
+      "file". /share and the add-on config directory are both writable.
+  serverAddr:
+    name: frps server address
+    description: Hostname or IP address of your frps server.
+  serverPort:
+    name: frps server port
+    description: >-
+      The port frps listens on - bindPort for tcp/websocket, kcpBindPort for
+      kcp, quicBindPort for quic.
+  authToken:
+    name: Authentication token
+    description: >-
+      Must match auth.token on the frps server. Leave empty only if the server
+      has no token configured.
+  protocol:
+    name: Transport protocol
+    description: >-
+      How frpc reaches frps. Use kcp or quic (both UDP) when TCP is throttled
+      or unreliable; wss when only HTTPS traffic gets through.
+  tls:
+    name: Encrypt the control connection
+    description: >-
+      Wraps the connection to frps in TLS. Turn off only if your server rejects
+      TLS handshakes.
+  proxyName:
+    name: Proxy name
+    description: >-
+      Identifies this tunnel on the server. Must be unique across all clients
+      connected to the same frps.
+  proxyType:
+    name: Proxy type
+    description: >-
+      "http" and "https" route by domain name and need vhost ports on the
+      server. "tcp" claims a plain port instead.
+  customDomain:
+    name: Public domain
+    description: >-
+      The domain visitors will use, for example ha.example.com. Its DNS record
+      must point at the frps server. Used by the http and https types.
+  remotePort:
+    name: Remote port
+    description: >-
+      The port opened on the frps server for the tcp type. Must be inside the
+      server's allowPorts range.
+  localIP:
+    name: Home Assistant address
+    description: >-
+      Where to forward the traffic. Keep 127.0.0.1 to reach Home Assistant on
+      this machine.
+  localPort:
+    name: Home Assistant port
+    description: The Home Assistant port, 8123 unless you changed it.
+  useEncryption:
+    name: Encrypt tunnel traffic
+    description: Encrypts the payload travelling between frpc and frps.
+  useCompression:
+    name: Compress tunnel traffic
+    description: >-
+      Compresses the payload. Helps on slow uplinks, costs some CPU on both
+      ends.
+  logLevel:
+    name: Log level
+    description: Raise to debug or trace when a tunnel refuses to come up.

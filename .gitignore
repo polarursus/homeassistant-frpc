@@ -1,0 +1,7 @@
+*.bak
+*.log
+.install-state
+frpc.toml
+frps.toml
+!server/examples/frps.toml
+.DS_Store
