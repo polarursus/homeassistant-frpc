@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1
+
+- Read the options from `/data/options.json` instead of the Supervisor API.
+  With `host_network` the Supervisor rejected the add-on's own token, so every
+  option came back empty and the add-on stopped with a misleading
+  "authToken is empty"
+
 ## 1.1.0
 
 - Added `configMode: file` for using a hand-written frpc TOML file unchanged

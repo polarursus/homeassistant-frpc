@@ -1,7 +1,7 @@
 ---
 name: "FRP Client"
 description: "Expose Home Assistant through a remote frps server - works behind CGNAT, with TCP, KCP, QUIC or WebSocket transports"
-version: "1.1.0"
+version: "1.1.1"
 slug: "frpc"
 url: "https://github.com/polarursus/homeassistant-frpc"
 init: false

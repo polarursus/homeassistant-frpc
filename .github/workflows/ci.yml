@@ -21,8 +21,7 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq shellcheck
-          shellcheck server/install-frps.sh
-          shellcheck --shell=bash --exclude=SC1008,SC2148 frpc/run.sh
+          shellcheck server/install-frps.sh frpc/run.sh
 
   yaml:
     name: YAML
